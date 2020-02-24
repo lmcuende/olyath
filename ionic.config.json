@@ -1,0 +1,8 @@
+{
+  "name": "olyath",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

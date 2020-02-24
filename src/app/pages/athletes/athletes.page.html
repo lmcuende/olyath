@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Athletes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment [(ngModel)]="selectedView">
+    <ion-segment-button value="aths">
+      <ion-label>Athlete</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="results">
+      <ion-label>Results</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+ 
+  <div [ngSwitch]="selectedView">
+    <div *ngSwitchCase="'aths'">
+      <ion-item>
+        <ion-label position="stacked">What\'s the athlete name?</ion-label>
+        <ion-input [(ngModel)]="athlete.name" placeholder="Athlete Name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">What are your results (comma separated)?</ion-label>
+        <ion-input [(ngModel)]="results" placeholder="Results"></ion-input>
+      </ion-item>
+      
+      <ion-button expand="block" (click)="addAthlete()">Add Athlete Info</ion-button>
+ 
+      <ion-list>
+        <ion-item button *ngFor="let ath of athletes" [routerLink]="['/', 'athletes', ath.athlete_id]">
+          
+          <ion-label>
+            <h2>{{ ath.name }}</h2>
+            <p>{{ ath.surname }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+ 
+    <div *ngSwitchCase="'results'">
+      <ion-item>
+        <ion-label position="stacked">Result</ion-label>
+        <ion-input [(ngModel)]="athlete_id" placeholder="Athlete"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Creator?</ion-label>
+        <ion-select [(ngModel)]="result.creator">
+          <ion-select-option *ngFor="let ath of athletes" [value]="ath.athlete_id">{{ ath.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="block" (click)="addResult()">Add Result</ion-button>
+ 
+      <ion-list>
+        <ion-item *ngFor="let resul of results | async">
+          <ion-label>
+            <h2>{{ resul.athlete_id }}</h2>
+            <p>Created by: {{ resul.creator }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
