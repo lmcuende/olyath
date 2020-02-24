@@ -11,7 +11,6 @@ export interface Ath {
   surname: string,
   date_of_birth: string,
   bio: string,
-  date_of_birth2: Date,
   height: number,
   weight: number,
   photo_id: any[]
@@ -82,7 +81,6 @@ export class DatabaseService {
             surname: data.rows.item(i).surname, 
             date_of_birth: data.rows.item(i).date_of_birth,
             bio: data.rows.item(i).bio,
-            date_of_birth2: data.rows.item(i).date_of_birth2,
             height: data.rows.item(i).heigh,
             weight: data.rows.item(i).weight,
             photo_id: data.rows.item(i).photo_id
@@ -94,8 +92,8 @@ export class DatabaseService {
   }
 
   addAthlete(name, surname, date_of_birth, bio, date_of_birth2, height, weight, photo_id) {
-    let data = [name, surname, date_of_birth, bio, date_of_birth2, height, weight, photo_id];
-    return this.database.executeSql('INSERT INTO Athlete (name, surname, date_of_birth, bio, date_of_birth2, height, weight, photo_id ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
+    let data = [name, surname, date_of_birth, bio, height, weight, photo_id];
+    return this.database.executeSql('INSERT INTO Athlete (name, surname, date_of_birth, bio, height, weight, photo_id ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', data).then(data => {
       this.loadAthletes();
     });
   }
@@ -113,7 +111,6 @@ export class DatabaseService {
         surname: data.rows.item(0).surname, 
         date_of_birth: data.rows.item(0).date_of_birth,
         bio: data.rows.item(0).bio,
-        date_of_birth2: data.rows.item(0).date_of_birth2,
         height: data.rows.item(0).heigh,
         weight: data.rows.item(0).weight,
         photo_id: data.rows.item(0).photo_id 
@@ -131,7 +128,7 @@ export class DatabaseService {
 
   updateAthlete(ath: Ath) {
     let data = [ath.name, ath.surname, ath.date_of_birth, ath.bio, ath.date_of_birth2, ath.height, ath.weight, ath.photo_id];
-    return this.database.executeSql(`UPDATE Athlete SET name = ?, surname = ?, date_of_birth = ?, bio = ?, date_of_birth2 = ?, height = ?, weight = ?, photo_id = ? WHERE athlete_id = ${ath.athlete_id}`, data).then(data => {
+    return this.database.executeSql(`UPDATE Athlete SET name = ?, surname = ?, date_of_birth = ?, bio = ?, height = ?, weight = ?, photo_id = ? WHERE athlete_id = ${ath.athlete_id}`, data).then(data => {
       this.loadAthletes();
     })
   }
