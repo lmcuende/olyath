@@ -9,7 +9,7 @@ export interface Ath {
   athlete_id: string,
   name: string,
   surname: string,
-  date_of_birth: string,
+  date_of_birth: Date,
   bio: string,
   height: number,
   weight: number,
@@ -127,7 +127,7 @@ export class DatabaseService {
   }
 
   updateAthlete(ath: Ath) {
-    let data = [ath.name, ath.surname, ath.date_of_birth, ath.bio, ath.date_of_birth2, ath.height, ath.weight, ath.photo_id];
+    let data = [ath.name, ath.surname, ath.date_of_birth, ath.bio, ath.height, ath.weight, ath.photo_id];
     return this.database.executeSql(`UPDATE Athlete SET name = ?, surname = ?, date_of_birth = ?, bio = ?, height = ?, weight = ?, photo_id = ? WHERE athlete_id = ${ath.athlete_id}`, data).then(data => {
       this.loadAthletes();
     })
